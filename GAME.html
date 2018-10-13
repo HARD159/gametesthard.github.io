@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<Head>
+	<meta charset="UTF-8">
+	<title>ИГРА</title>
+</head>
+
+<body>
+	
+	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
+	<canvas id="canvas" width="1300" height="740"></canvas>
+	<script src="./map.js"></script>
+	<script src="./sprites.js"></script>
+	<script src="./buttons.js"></script>
+	<script src="./Smoke.js"></script>
+	<script src="./player1.js"></script>
+	<script>
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+// временные
+
+var woundplayer1 = function() {
+	var bloodPlayer1 = $(blood);
+	bloodPlayer1.css({
+		position: "absolute",
+		left: player01.pointCenter.x - 22,
+		top: player01.pointCenter.y - 22,
+	});
+	$("#player1").remove();
+	$("body").append(bloodPlayer1);
+	$("body").append(pturnElement);
+};
+
+var woundplayer2 = function() {
+	var bloodPlayer2 = $(blood);
+	bloodPlayer2.css({
+		position: "absolute",
+		left: player02.pointCenter.x - 22,
+		top: player02.pointCenter.y - 22,
+	});
+	$("#player2").remove();
+	$("body").append(bloodPlayer2);
+	$("body").append(pturnElementP2);
+};
+
+
+//временные
+
+var MapGrapics = $(mapgr);
+MapGrapics.css({
+	position: "absolute",
+	left: 18,
+	top: 18
+	});
+$("body").append(MapGrapics);
+
+
+var drawPlayer = function() {
+	pturnElement.css({
+		position: "absolute",
+		left: player01.pointCenter.x - 12,
+		top: player01.pointCenter.y - 12
+	});
+	pturnElementP2.css({
+		position: "absolute",
+		left: player02.pointCenter.x - 12,
+		top: player02.pointCenter.y - 12
+	});
+ };
+
+var pturnElement = $(player01.picturePlayer);
+	$(pturnElement).attr('id', 'player01');
+	pturnElement.css({
+		position: "absolute",
+		left: player01.pointCenter.x - 12,
+		top: player01.pointCenter.y - 12
+	});
+$("body").append(pturnElement);   
+
+var pturnElementP2 = $(player02.picturePlayer);
+	$(pturnElementP2).attr('id', 'player02');
+pturnElementP2.css({
+	position: "absolute",
+	left: player02.pointCenter.x - 12,
+	top: player02.pointCenter.y - 12
+	});
+$("body").append(pturnElementP2);
+
+
+var pistol1 = $(pist1);
+	$(pistol1).attr('id', 'pistol1');
+pistol1.css({
+	position: "absolute",
+	left: 18,
+	top: 740
+	});
+$("body").append(pistol1);
+
+var pistol2 = $(pist2);
+	$(pistol2).attr('id', 'pistol2');
+pistol2.css({
+	position: "absolute",
+	left: 1048,
+	top: 740
+	});
+$("body").append(pistol2);
+
+var bullet1P1 = $(bullet);
+var bullet2P1 = $(bullet);
+var bullet3P1 = $(bullet);
+var bullet4P1 = $(bullet);
+var bullet5P1 = $(bullet);
+
+var bullet1P2 = $(bullet);
+var bullet2P2 = $(bullet);
+var bullet3P2 = $(bullet);
+var bullet4P2 = $(bullet);
+var bullet5P2 = $(bullet);
+
+var reloadP1 = $(reload);
+$(reloadP1).attr('id', 'reloadP1');
+reloadP1.css({
+	position: "absolute",
+	left: 268,
+	top: 740
+});
+var reloadP2 = $(reload);
+$(reloadP2).attr('id', 'reloadP2');
+reloadP2.css({
+	position: "absolute",
+	left: 768,
+	top: 740
+});
+
+var timeUpReloadP1 = function () {
+	$("#reloadP1").remove();
+	player01.ammo = 5;
+	drawBulletP1();
+};
+
+var timeUpReloadP2 = function () {
+	$("#reloadP2").remove();
+	player02.ammo = 5;
+	drawBulletP2();
+};
+
+
+
+
+var drawBulletP1 = function() {
+	if (player01.ammo == 0) {
+		$("body").append(reloadP1);
+		console.log("перезарядка");
+		setTimeout(timeUpReloadP1, 2000 + (Math.floor(Math.random() * 4) * 1000 ));
+	};
+	if (player01.ammo >= 1) {
+		$(bullet1P1).attr('id', 'bullet01P1');
+		bullet1P1.css({
+			position: "absolute",
+			left: 268,
+			top: 740
+		});
+		$("body").append(bullet1P1);
+	} else {
+		$("#bullet01P1").remove();
+	};
+	if (player01.ammo >= 2) {
+		$(bullet2P1).attr('id', 'bullet02P1');
+		bullet2P1.css({
+			position: "absolute",
+			left: 296,
+			top: 740
+		});
+		$("body").append(bullet2P1);
+	} else {
+		$("#bullet02P1").remove();
+	};
+	if (player01.ammo >= 3) {
+		$(bullet3P1).attr('id', 'bullet03P1');
+		bullet3P1.css({
+			position: "absolute",
+			left: 324,
+			top: 740
+		});
+		$("body").append(bullet3P1);
+	} else {
+		$("#bullet03P1").remove();
+	};
+	if (player01.ammo >= 4) {
+		$(bullet4P1).attr('id', 'bullet04P1');
+		bullet4P1.css({
+			position: "absolute",
+			left: 352,
+			top: 740
+		});
+		$("body").append(bullet4P1);
+	} else {
+		$("#bullet04P1").remove();
+	};
+	if (player01.ammo >= 5) {
+		$(bullet5P1).attr('id', 'bullet05P1');
+		bullet5P1.css({
+			position: "absolute",
+			left: 380,
+			top: 740
+		});
+		$("body").append(bullet5P1);
+	} else {
+		$("#bullet05P1").remove();
+	};
+};
+
+var drawBulletP2 = function() {
+	if (player02.ammo == 0) {
+		$("body").append(reloadP2);
+		console.log("перезарядка");
+
+		setTimeout(timeUpReloadP2, 2000 + (Math.floor(Math.random() * 4) * 1000 ));
+	};
+	if (player02.ammo >= 1) {
+		$(bullet1P2).attr('id', 'bullet01P2');
+		bullet1P2.css({
+			position: "absolute",
+			left: 1020,
+			top: 740
+		});
+		$("body").append(bullet1P2);
+	} else {
+		$("#bullet01P2").remove();
+	};
+	if (player02.ammo >= 2) {
+		$(bullet2P2).attr('id', 'bullet02P2');
+		bullet2P2.css({
+			position: "absolute",
+			left: 992,
+			top: 740
+		});
+		$("body").append(bullet2P2);
+	} else {
+		$("#bullet02P2").remove();
+	};
+	if (player02.ammo >= 3) {
+		$(bullet3P2).attr('id', 'bullet03P2');
+		bullet3P2.css({
+			position: "absolute",
+			left: 964,
+			top: 740
+		});
+		$("body").append(bullet3P2);
+	} else {
+		$("#bullet03P2").remove();
+	};
+	if (player02.ammo >= 4) {
+		$(bullet4P2).attr('id', 'bullet04P2');
+		bullet4P2.css({
+			position: "absolute",
+			left: 936,
+			top: 740
+		});
+		$("body").append(bullet4P2);
+	} else {
+		$("#bullet04P2").remove();
+	};
+	if (player02.ammo >= 5) {
+		$(bullet5P2).attr('id', 'bullet05P2');
+		bullet5P2.css({
+			position: "absolute",
+			left: 908,
+			top: 740
+		});
+		$("body").append(bullet5P2);
+	} else {
+		$("#bullet05P2").remove();
+	};
+};
+
+drawBulletP1();
+drawBulletP2();
+
+
+
+
+
+</script>
+
+
+
+</body>
+</Head>
+</html>
